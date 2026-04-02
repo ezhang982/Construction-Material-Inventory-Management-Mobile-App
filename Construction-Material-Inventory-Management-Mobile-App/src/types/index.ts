@@ -5,7 +5,7 @@ export type  UserRole = 'Admin' |
 
 export interface Credential {
     email: string;
-    hashedPassword: string;          // backend only
+    hashedPassword: string;         // backend only
     role: UserRole;
     // permissionLevel: number; (omit)
 }
@@ -47,3 +47,21 @@ export interface Warehouse{
     deliveries: Delivery[];         // deliveries currently staged at this warehouse
 }
 
+export interface Delivery{
+    deliveryId: string;
+    arrivedAt: string;
+    inventory: Inventory;           // items in this shipment
+    destination: string;            // jobsiteId
+    isConfirmed: boolean;           // true once packing slip scan is correct
+}
+
+export type PayorderStatus = 'pending' | 'partial' | 'fulfilled';
+
+export interface Payorder{
+    payorderId: string;
+    destination: string;            // jobsiteId
+    inventory: Inventory;           // expected materials that haven't arrived yet
+    uploadedAt: string;
+    status: PayorderStatus;         // should be auto-updated
+    uploadedBy: string;             // email of PM who uploaded it
+}
