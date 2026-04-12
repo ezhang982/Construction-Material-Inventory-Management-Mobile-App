@@ -36,7 +36,10 @@ export default function MainMenu() {
           <Text style={styles.menuButtonText}>Jobsite Inventories</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity style={styles.menuButton}>
+        <TouchableOpacity 
+          style={styles.menuButton}
+          onPress={() => navigation.navigate('Payorders')}
+        >
           <Text style={styles.menuButtonText}>Pay Orders</Text>
         </TouchableOpacity>
         
