@@ -30,8 +30,32 @@ export const mockPayorders: Payorder[] = [
   { id: '3', address: '5412 Thorenview Rd Baltimore, MD', payorderNumber: '0000233' },
   { id: '4', address: '6767 Handsmotion St Rockville, MD', payorderNumber: '0000001' },
   { id: '5', address: '6767 Handsmotion St Rockville, MD', payorderNumber: '0000002' },
-  // Extra data to ensure scrolling
+  // Extra data for scrolling
   { id: '6', address: '0991 Marryway Blvd Bethesda, MD', payorderNumber: '0000115' },
   { id: '7', address: '2049 Suntash Rd Richmond, VA', payorderNumber: '0000889' },
   { id: '8', address: '8112 Bandanna Rd Germantown, MD', payorderNumber: '0000442' },
+];
+
+export interface Warehouse {
+  id: string;
+  address: string;
+}
+
+export const mockWarehouses: Warehouse[] = [
+  { id: '0000001', address: '9129 Lenten Dr Rockville MD' },
+  { id: '0000002', address: '0191 Tuefort Blvd Bethesda, MD' },
+];
+
+export interface Delivery {
+  id: string;
+  warehouseId: string;
+  destinationAddress: string;
+  deliveryNumber: string;
+}
+
+export const mockDeliveries: Delivery[] = [
+  { id: '1', warehouseId: '0000001', destinationAddress: '5412 Thorenview Rd Baltimore, MD', deliveryNumber: '9210395021' },
+  { id: '2', warehouseId: '0000001', destinationAddress: '5412 Thorenview Rd Baltimore, MD', deliveryNumber: '9210397912' },
+  { id: '3', warehouseId: '0000002', destinationAddress: '6767 Handsmotion St Rockville, MD', deliveryNumber: '1294845991' },
+  { id: '4', warehouseId: '0000002', destinationAddress: '6767 Handsmotion St Rockville, MD', deliveryNumber: '1297918293' },
 ];

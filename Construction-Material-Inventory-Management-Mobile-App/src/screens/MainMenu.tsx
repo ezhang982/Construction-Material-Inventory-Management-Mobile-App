@@ -43,7 +43,10 @@ export default function MainMenu() {
           <Text style={styles.menuButtonText}>Pay Orders</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity style={styles.menuButton}>
+        <TouchableOpacity 
+          style={styles.menuButton}
+          onPress={() => navigation.navigate('Warehouses')}
+        >
           <Text style={styles.menuButtonText}>Warehouses</Text>
         </TouchableOpacity>
       </View>
