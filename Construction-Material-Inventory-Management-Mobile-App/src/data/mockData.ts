@@ -1,21 +1,36 @@
+export interface inventoryItem {
+  type:string;
+  id:string;
+  name:string;
+  amount:string;
+}
+
+export const mockItemList: inventoryItem[] = [
+  {type: 'M', id: '', name: '20 mm Plastic Tubing', amount: '100'},
+  {type: 'M', id: '', name: '4x5 Wood Paneling', amount: '3'},
+  {type: 'E', id: '2351513', name: 'Cooling Unit', amount: '4'},
+  {type: 'T', id: '1305921491451', name: 'Hand Drill', amount: '1'}
+]
+
 export interface Jobsite {
   id: string;
   address: string;
+  inventory: inventoryItem[];
 }
 
 export const mockJobsites: Jobsite[] = [
-  { id: '1246223', address: '5412 Thorenview Rd Baltimore, MD' },
-  { id: '1282134', address: '0991 Marryway Blvd Bethesda, MD' },
-  { id: '3451209', address: '2049 Suntash Rd Richmond, VA' },
-  { id: '5329109', address: '6767 Handsmotion St Rockville, MD' },
-  { id: '8875302', address: '8112 Bandanna Rd Germantown, MD' },
+  { id: '1246223', address: '5412 Thorenview Rd Baltimore, MD', inventory:mockItemList},
+  { id: '1282134', address: '0991 Marryway Blvd Bethesda, MD', inventory:mockItemList},
+  { id: '3451209', address: '2049 Suntash Rd Richmond, VA', inventory:mockItemList},
+  { id: '5329109', address: '6767 Handsmotion St Rockville, MD', inventory:mockItemList},
+  { id: '8875302', address: '8112 Bandanna Rd Germantown, MD', inventory:mockItemList},
   
   // Extra data to force scrolling:
-  { id: '9928172', address: '101 Main St Annapolis, MD' },
-  { id: '4455667', address: '555 Tech Corridor Herndon, VA' },
-  { id: '1122334', address: '789 Industrial Pkwy Towson, MD' },
-  { id: '5544332', address: '321 Construction Way DC' },
-  { id: '9988776', address: '88 Builder Blvd Arlington, VA' },
+  { id: '9928172', address: '101 Main St Annapolis, MD' , inventory:mockItemList},
+  { id: '4455667', address: '555 Tech Corridor Herndon, VA' , inventory:mockItemList},
+  { id: '1122334', address: '789 Industrial Pkwy Towson, MD' , inventory:mockItemList},
+  { id: '5544332', address: '321 Construction Way DC' , inventory:mockItemList},
+  { id: '9988776', address: '88 Builder Blvd Arlington, VA' , inventory:mockItemList},
 ];
 
 export interface Payorder {
@@ -59,3 +74,7 @@ export const mockDeliveries: Delivery[] = [
   { id: '3', warehouseId: '0000002', destinationAddress: '6767 Handsmotion St Rockville, MD', deliveryNumber: '1294845991' },
   { id: '4', warehouseId: '0000002', destinationAddress: '6767 Handsmotion St Rockville, MD', deliveryNumber: '1297918293' },
 ];
+
+
+
+

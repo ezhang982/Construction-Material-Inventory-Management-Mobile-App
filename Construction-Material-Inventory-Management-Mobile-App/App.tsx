@@ -9,6 +9,7 @@ import Jobsites from './src/screens/jobSites';
 import Payorders from './src/screens/Payorders';
 import Warehouses from './src/screens/Warehouses';
 import WarehouseDeliveries from './src/screens/WarehouseDeliveries';
+import JobsiteInventory from './src/screens/JobSiteInventory';
 
 // Type definitions for TypeScript
 export type RootStackParamList = {
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   Payorders: undefined;
   Warehouses: undefined;
   WarehouseDeliveries: { warehouseId: string };
+  JobsiteInventory: { JobsiteId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -33,6 +35,7 @@ export default function App() {
         <Stack.Screen name="Payorders" component={Payorders} />
         <Stack.Screen name="Warehouses" component={Warehouses} />
         <Stack.Screen name="WarehouseDeliveries" component={WarehouseDeliveries} />
+        <Stack.Screen name="JobsiteInventory" component={JobsiteInventory} />
       </Stack.Navigator>
     </NavigationContainer>
   );
