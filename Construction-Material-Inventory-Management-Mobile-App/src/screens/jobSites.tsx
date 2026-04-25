@@ -16,7 +16,9 @@ export default function JobsiteInventories() {
   );
 
   const renderItem = ({ item }: { item: Jobsite }) => (
-    <TouchableOpacity style={styles.jobsiteCard}>
+    <TouchableOpacity 
+      style={styles.jobsiteCard} 
+      onPress={() => navigation.navigate('JobSiteInventory', { JobsiteId: item.id })}>
       <Text style={styles.jobsiteId}>{item.id}</Text>
       <Text style={styles.divider}>|</Text>
       <Text style={styles.jobsiteAddress}>{item.address}</Text>

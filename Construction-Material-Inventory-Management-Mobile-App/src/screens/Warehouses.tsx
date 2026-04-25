@@ -19,8 +19,7 @@ export default function WarehouseInventories() {
     <TouchableOpacity 
       style={styles.jobsiteCard}
       // Pass the specific item.id to the route parameters
-      onPress={() => navigation.navigate('WarehouseDeliveries', { warehouseId: item.id })} 
-    >
+      onPress={() => navigation.navigate('WarehouseDeliveries', { warehouseId: item.id })}>
       <Text style={styles.jobsiteId}>{item.id}</Text>
       <Text style={styles.divider}>|</Text>
       <Text style={styles.jobsiteAddress}>{item.address}</Text>

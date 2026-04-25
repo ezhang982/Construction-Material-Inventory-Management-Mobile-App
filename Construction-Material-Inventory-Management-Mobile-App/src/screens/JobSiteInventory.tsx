@@ -3,29 +3,32 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList } from 'r
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
-import { inventoryItem, Item, mockItemList, mockJobsites } from '../data/mockData';
+import { inventoryItem, mockItemList, mockJobsites } from '../data/mockData';
 
 // For TypeScript to know parameters to expect from the route
-type WarehouseDeliveriesRouteProp = RouteProp<RootStackParamList, 'WarehouseDeliveries'>;
+type JobSiteInventoryRouteProp = RouteProp<RootStackParamList, 'JobSiteInventory'>;
 
 export default function JobsiteInventory() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const route = useRoute<WarehouseDeliveriesRouteProp>();
+  const route = useRoute<JobSiteInventoryRouteProp>();
   
   // Extract the ID passed from the previous screen
   const { JobsiteId } = route.params;
 
+ 
+
   // Find the specific jobsite details for the header
-  const currentJobsite = mockJobsites.find(w => w.id === JobsiteId);
+  const currentJobsite = mockJobsites.find(jobsite => jobsite.id === JobsiteId);
 
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter deliveries by the specific warehouse AND the search query
-    const filteredItems = (currentJobsite?.inventory).filter(
-      (inventoryItem.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      inventoryItem.name.includes(searchQuery))
-    );
+  const filteredItems = (currentJobsite?.inventory).filter(inventoryItem =>
+    (inventoryItem.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    inventoryItem.name.includes(searchQuery))
+  );
 
+   console.log(filteredItems);
 
   const renderItem = ({ item }: { item: inventoryItem }) => (
     <View style={styles.card}>
@@ -37,9 +40,6 @@ export default function JobsiteInventory() {
       <Text style={styles.divider}>|</Text>
       <Text style={styles.nameText}>{item.name}</Text>
     <View style={styles.card}></View>
-      <Text style={styles.typeText} numberOfLines={2}>
-        {item.type}
-      </Text>
       <Text style={styles.divider}>x</Text>
       <Text style={styles.amountText}>{item.amount}</Text>
     </View>
@@ -89,7 +89,7 @@ export default function JobsiteInventory() {
       <View style={styles.listContainer}>
         <FlatList
           data={filteredItems}
-          keyExtractor={(item) => item.id}
+          keyExtractor={innerItem => innerItem.id}
           renderItem={renderItem}
           showsVerticalScrollIndicator={true}
           contentContainerStyle={{ paddingBottom: 20 }}
