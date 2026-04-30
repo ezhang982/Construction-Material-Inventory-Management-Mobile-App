@@ -1,39 +1,67 @@
 import React from 'react';
+import { View, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// Import Screens/Pages
-import Login from './src/screens/Login';
-import MainMenu from './src/screens/MainMenu';
-import Jobsites from './src/screens/jobSites';
-import Payorders from './src/screens/Payorders';
-import Warehouses from './src/screens/Warehouses';
+import { AuthProvider, useAuth } from './src/context/AuthContext';
+
+import Login               from './src/screens/Login';
+import MainMenu            from './src/screens/MainMenu';
+import Jobsites            from './src/screens/jobSites';
+import Payorders           from './src/screens/Payorders';
+import Warehouses          from './src/screens/Warehouses';
 import WarehouseDeliveries from './src/screens/WarehouseDeliveries';
 
-// Type definitions for TypeScript
+// Screens reachable once authenticated.
 export type RootStackParamList = {
-  Login: undefined;
-  MainMenu: undefined;
-  Jobsites: undefined;
-  Payorders: undefined;
-  Warehouses: undefined;
-  WarehouseDeliveries: { warehouseId: string };
+  MainMenu:            undefined;
+  Jobsites:            undefined;
+  Payorders:           undefined;
+  Warehouses:          undefined;
+  WarehouseDeliveries: { warehouseId: string; warehouseAddress: string };
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+type AuthStackParamList = { Login: undefined };
+
+const MainStack = createNativeStackNavigator<RootStackParamList>();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
+
+function RootNavigator() {
+  const { token, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  if (!token) {
+    return (
+      <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+        <AuthStack.Screen name="Login" component={Login} />
+      </AuthStack.Navigator>
+    );
+  }
+
+  return (
+    <MainStack.Navigator initialRouteName="MainMenu" screenOptions={{ headerShown: false }}>
+      <MainStack.Screen name="MainMenu"            component={MainMenu} />
+      <MainStack.Screen name="Jobsites"            component={Jobsites} />
+      <MainStack.Screen name="Payorders"           component={Payorders} />
+      <MainStack.Screen name="Warehouses"          component={Warehouses} />
+      <MainStack.Screen name="WarehouseDeliveries" component={WarehouseDeliveries} />
+    </MainStack.Navigator>
+  );
+}
 
 export default function App() {
   return (
-    <NavigationContainer>
-      {/* screenOptions={{ headerShown: false }} hides the default top header bar */}
-      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="MainMenu" component={MainMenu} />
-        <Stack.Screen name="Jobsites" component={Jobsites} />
-        <Stack.Screen name="Payorders" component={Payorders} />
-        <Stack.Screen name="Warehouses" component={Warehouses} />
-        <Stack.Screen name="WarehouseDeliveries" component={WarehouseDeliveries} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    </AuthProvider>
   );
 }

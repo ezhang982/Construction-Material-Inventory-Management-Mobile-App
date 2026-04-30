@@ -3,17 +3,19 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
+import { useAuth } from '../context/AuthContext';
 
 export default function MainMenu() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { logout } = useAuth();
 
   return (
     <View style={styles.container}>
       {/* Top Navigation Bar */}
       <View style={styles.navBar}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.navButton}
-          onPress={() => navigation.navigate('Login')} 
+          onPress={logout}
         >
           <Text style={styles.navButtonText}>Logout</Text>
         </TouchableOpacity>

@@ -1,55 +1,79 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../App'; 
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { login as apiLogin } from '../api/auth';
+import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { login } = useAuth();
 
-  const handleLogin = () => {
-    navigation.navigate('MainMenu');
+  const [email, setEmail]       = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError]       = useState('');
+  const [loading, setLoading]   = useState(false);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setError('Email and password are required.');
+      return;
+    }
+    setError('');
+    setLoading(true);
+    try {
+      const { token, user } = await apiLogin(email.trim(), password);
+      await login(token, user);
+      // App.tsx will switch to the main stack automatically once token is set.
+    } catch (err: any) {
+      setError(err.message || 'Login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.title}>Login</Text>
-        
-        {/* Email/Username Input */}
+
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Email</Text>
-          <TextInput 
+          <TextInput
             style={styles.input}
             placeholder="Enter your email"
             keyboardType="email-address"
             autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
 
-        {/* Password Input */}
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Password</Text>
-          <TextInput 
+          <TextInput
             style={styles.input}
             placeholder="Enter your password"
-            secureTextEntry={true} 
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
           />
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Log In</Text>
+        {error ? <Text style={styles.error}>{error}</Text> : null}
+
+        <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
+          {loading
+            ? <ActivityIndicator color="#000" />
+            : <Text style={styles.buttonText}>Log In</Text>
+          }
         </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-// StyleSheet
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Takes up the whole screen
-    backgroundColor: '#E5E7EB', // Tailwind's gray-200
+    flex: 1,
+    backgroundColor: '#E5E7EB',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 16,
@@ -63,7 +87,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3, // Shadows
+    elevation: 3,
   },
   title: {
     fontSize: 20,
@@ -85,6 +109,11 @@ const styles = StyleSheet.create({
     padding: 12,
     color: '#000',
   },
+  error: {
+    color: '#DC2626',
+    fontSize: 13,
+    marginBottom: 8,
+  },
   button: {
     marginTop: 24,
     backgroundColor: '#D1D5DB',
@@ -94,5 +123,5 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: '600',
     color: '#000',
-  }
+  },
 });
