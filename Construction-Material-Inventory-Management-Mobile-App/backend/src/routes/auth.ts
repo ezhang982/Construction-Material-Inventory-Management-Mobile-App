@@ -18,3 +18,5 @@ router.post('/register', register);
 router.get('/users', listUsers);
 router.delete('/users/:email', deleteUser);
 router.patch('/users/:email/permission', updatePermission);
+
+export default router;

@@ -5,18 +5,22 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 
-import Login               from './src/screens/Login';
-import MainMenu            from './src/screens/MainMenu';
-import Jobsites            from './src/screens/jobSites';
-import Payorders           from './src/screens/Payorders';
-import Warehouses          from './src/screens/Warehouses';
-import WarehouseDeliveries from './src/screens/WarehouseDeliveries';
+import Login                from './src/screens/Login';
+import MainMenu             from './src/screens/MainMenu';
+import Jobsites             from './src/screens/jobSites';
+import JobsiteInventory     from './src/screens/JobsiteInventory';
+import Payorders            from './src/screens/Payorders';
+import PayorderInventory    from './src/screens/PayorderInventory';
+import Warehouses           from './src/screens/Warehouses';
+import WarehouseDeliveries  from './src/screens/WarehouseDeliveries';
 
 // Screens reachable once authenticated.
 export type RootStackParamList = {
   MainMenu:            undefined;
   Jobsites:            undefined;
+  JobsiteInventory:    { jobsiteId: string; jobsiteName: string; jobsiteAddress: string };
   Payorders:           undefined;
+  PayorderInventory:   { payorderId: string; payorderNumber: string; jobsiteAddress: string; fulfillmentStatus: string };
   Warehouses:          undefined;
   WarehouseDeliveries: { warehouseId: string; warehouseAddress: string };
 };
@@ -49,7 +53,9 @@ function RootNavigator() {
     <MainStack.Navigator initialRouteName="MainMenu" screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="MainMenu"            component={MainMenu} />
       <MainStack.Screen name="Jobsites"            component={Jobsites} />
+      <MainStack.Screen name="JobsiteInventory"    component={JobsiteInventory} />
       <MainStack.Screen name="Payorders"           component={Payorders} />
+      <MainStack.Screen name="PayorderInventory"   component={PayorderInventory} />
       <MainStack.Screen name="Warehouses"          component={Warehouses} />
       <MainStack.Screen name="WarehouseDeliveries" component={WarehouseDeliveries} />
     </MainStack.Navigator>

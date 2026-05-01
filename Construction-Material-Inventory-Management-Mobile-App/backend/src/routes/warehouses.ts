@@ -16,3 +16,5 @@ router.delete('/:id', requirePermission(PERMISSIONS.PROJECT_MANAGER), deleteWare
 router.get('/:id/deliveries', getDeliveries);
 router.post('/:id/deliveries', requirePermission(PERMISSIONS.LOGISTICS), createDelivery);
 router.delete('/:warehouseId/deliveries/:deliveryId', requirePermission(PERMISSIONS.PROJECT_MANAGER), deleteDelivery);
+
+export default router;

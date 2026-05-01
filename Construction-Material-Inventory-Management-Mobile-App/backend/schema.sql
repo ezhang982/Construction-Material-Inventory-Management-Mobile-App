@@ -28,7 +28,9 @@ CREATE TABLE IF NOT EXISTS payorders(
     jobsite_id INTEGER NOT NULL REFERENCES jobsites(id) ON DELETE CASCADE,
     payorder_number VARCHAR(16) NOT NULL,
     uploaded_by VARCHAR(254) NOT NULL,
-    uploaded_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    uploaded_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    fulfillment_status VARCHAR(16) NOT NULL DEFAULT 'pending'
+        CHECK (fulfillment_status IN ('pending', 'partial', 'fulfilled'))
 );
 
 -- deliveries
@@ -49,7 +51,8 @@ CREATE TABLE IF NOT EXISTS materials(
     delivery_id INTEGER REFERENCES deliveries(id) ON DELETE CASCADE,
     material_name VARCHAR(128) NOT NULL,
     material_description TEXT NOT NULL,
-    material_amount INTEGER NOT NULL CHECK (material_amount >= 0)
+    material_amount INTEGER NOT NULL CHECK (material_amount >= 0),
+    fulfilled_amount INTEGER NOT NULL DEFAULT 0 CHECK (fulfilled_amount >= 0)
 );
 
 -- equipment
@@ -61,7 +64,8 @@ CREATE TABLE IF NOT EXISTS equipment(
     equipment_name VARCHAR(128) NOT NULL,
     equipment_serial_number VARCHAR(64) NOT NULL,
     equipment_description TEXT NOT NULL,
-    equipment_amount INTEGER NOT NULL CHECK (equipment_amount >= 0)
+    equipment_amount INTEGER NOT NULL CHECK (equipment_amount >= 0),
+    fulfilled_amount INTEGER NOT NULL DEFAULT 0 CHECK (fulfilled_amount >= 0)
 );
 
 -- tools
@@ -71,7 +75,9 @@ CREATE TABLE IF NOT EXISTS tools(
     payorder_id INTEGER REFERENCES payorders(id) ON DELETE CASCADE,
     delivery_id INTEGER REFERENCES deliveries(id) ON DELETE CASCADE,
     tool_name VARCHAR(128) NOT NULL,
-    tool_id_number VARCHAR(64) NOT NULL
+    tool_id_number VARCHAR(64) NOT NULL,
+    tool_amount INTEGER NOT NULL DEFAULT 1 CHECK (tool_amount >= 0),
+    fulfilled_amount INTEGER NOT NULL DEFAULT 0 CHECK (fulfilled_amount >= 0)
 );
 
 -- default admin account

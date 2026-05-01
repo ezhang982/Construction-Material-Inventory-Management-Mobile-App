@@ -17,3 +17,5 @@ router.delete('/:id', requirePermission(PERMISSIONS.PROJECT_MANAGER), deleteJobs
 router.get('/:id/inventory', getJobsiteInventory);
 router.post('/:id/inventory', requirePermission(PERMISSIONS.PROJECT_MANAGER), addInventoryItem);
 router.delete('/:id/inventory/:itemType/:itemRowId', requirePermission(PERMISSIONS.PROJECT_MANAGER), removeInventoryItem);
+
+export default router;

@@ -62,15 +62,19 @@ export async function deleteJobsite(req: Request, res: Response): Promise<void> 
     }
 }
 
+const MAT_COLS  = `id, material_name AS "name", material_description AS "description", material_amount AS "amount"`;
+const EQUIP_COLS = `id, equipment_name AS "name", equipment_serial_number AS "serialNumber", equipment_description AS "description", equipment_amount AS "amount"`;
+const TOOL_COLS  = `id, tool_name AS "name", tool_id_number AS "idNumber"`;
+
 // GET /jobsites/:id/inventory
 export async function getJobsiteInventory(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
 
     try {
         const [materials, equipment, tools] = await Promise.all([
-            pool.query('SELECT * FROM materials WHERE jobsite_id = $1', [id]),
-            pool.query('SELECT * FROM equipment WHERE jobsite_id = $1', [id]),
-            pool.query('SELECT * FROM tools WHERE jobsite_id = $1', [id]),
+            pool.query(`SELECT ${MAT_COLS}   FROM materials  WHERE jobsite_id = $1`, [id]),
+            pool.query(`SELECT ${EQUIP_COLS} FROM equipment  WHERE jobsite_id = $1`, [id]),
+            pool.query(`SELECT ${TOOL_COLS}  FROM tools      WHERE jobsite_id = $1`, [id]),
         ]);
 
         res.json({

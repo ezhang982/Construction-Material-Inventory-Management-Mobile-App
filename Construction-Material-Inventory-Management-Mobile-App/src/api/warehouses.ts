@@ -44,3 +44,25 @@ export async function getDeliveries(warehouseId: number): Promise<DeliveryRow[]>
     if (!res.ok) throw new Error(data.error || 'Failed to fetch deliveries');
     return data;
 }
+
+export async function createDelivery(
+    warehouseId: number,
+    packingSlipId: string,
+    destinationAddress: string,
+): Promise<DeliveryRow> {
+    const res = await apiFetch(`/warehouses/${warehouseId}/deliveries`, {
+        method: 'POST',
+        body: JSON.stringify({ packingSlipId, destinationAddress }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to create delivery');
+    return data;
+}
+
+export async function deleteDelivery(warehouseId: number, deliveryId: number): Promise<void> {
+    const res = await apiFetch(`/warehouses/${warehouseId}/deliveries/${deliveryId}`, { method: 'DELETE' });
+    if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to delete delivery');
+    }
+}
