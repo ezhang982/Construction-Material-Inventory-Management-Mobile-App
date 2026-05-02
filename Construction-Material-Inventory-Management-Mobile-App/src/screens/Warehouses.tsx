@@ -86,6 +86,7 @@ export default function WarehouseInventories() {
         <TouchableOpacity style={styles.headerButton} onPress={() => navigation.goBack()}>
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
+        <Text style={styles.pageTitle}>Warehouses</Text>
         <TouchableOpacity style={styles.headerButton} onPress={openModal}>
           <Text style={styles.buttonText}>Add Warehouse</Text>
         </TouchableOpacity>
@@ -159,7 +160,8 @@ export default function WarehouseInventories() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#E5E7EB', paddingTop: 50, paddingHorizontal: 16 },
-  headerRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 },
+  headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
+  pageTitle: { flex: 1, textAlign: 'center', fontSize: 24, fontWeight: '700', color: '#111827' },
   headerButton: { backgroundColor: '#A3A3A3', paddingVertical: 10, paddingHorizontal: 16, borderRadius: 4 },
   buttonText: { color: '#000', fontSize: 16, fontWeight: '500' },
   searchContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 20, width: '100%' },

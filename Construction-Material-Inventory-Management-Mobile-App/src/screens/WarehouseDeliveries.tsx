@@ -160,21 +160,21 @@ export default function WarehouseDeliveries() {
           </Text>
         </View>
         <TouchableOpacity style={[styles.headerButton, styles.deleteButton]} onPress={openDelete}>
-          <Text style={styles.buttonText}>Delete</Text>
+          <Text style={styles.buttonText}>Delete Warehouse</Text>
         </TouchableOpacity>
       </View>
 
       {/* Action row */}
       <View style={styles.actionRow}>
         <TouchableOpacity style={styles.actionButton} onPress={openAdd}>
-          <Text style={styles.buttonText}>Add</Text>
+          <Text style={styles.buttonText}>Add Delivery</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.actionButton, !selectedId && styles.actionDisabled]}
           onPress={openRemove}
           disabled={!selectedId}
         >
-          <Text style={styles.buttonText}>Remove</Text>
+          <Text style={styles.buttonText}>Remove Delivery</Text>
         </TouchableOpacity>
       </View>
 
