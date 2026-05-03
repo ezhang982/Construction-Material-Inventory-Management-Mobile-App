@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from './src/context/AuthContext';
 
 import Login                from './src/screens/Login';
 import MainMenu             from './src/screens/MainMenu';
+import Admin                from './src/screens/Admin';
 import Jobsites             from './src/screens/jobSites';
 import JobsiteInventory     from './src/screens/JobsiteInventory';
 import Payorders            from './src/screens/Payorders';
@@ -17,6 +18,7 @@ import WarehouseDeliveries  from './src/screens/WarehouseDeliveries';
 // Screens reachable once authenticated.
 export type RootStackParamList = {
   MainMenu:            undefined;
+  Admin:               undefined;
   Jobsites:            undefined;
   JobsiteInventory:    { jobsiteId: string; jobsiteName: string; jobsiteAddress: string };
   Payorders:           undefined;
@@ -52,6 +54,7 @@ function RootNavigator() {
   return (
     <MainStack.Navigator initialRouteName="MainMenu" screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="MainMenu"            component={MainMenu} />
+      <MainStack.Screen name="Admin"               component={Admin} />
       <MainStack.Screen name="Jobsites"            component={Jobsites} />
       <MainStack.Screen name="JobsiteInventory"    component={JobsiteInventory} />
       <MainStack.Screen name="Payorders"           component={Payorders} />

@@ -20,7 +20,10 @@ export default function MainMenu() {
           <Text style={styles.navButtonText}>Logout</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity style={styles.navButton}>
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => navigation.navigate('Admin')}
+        >
           <Text style={styles.navButtonText}>Admin</Text>
         </TouchableOpacity>
         
