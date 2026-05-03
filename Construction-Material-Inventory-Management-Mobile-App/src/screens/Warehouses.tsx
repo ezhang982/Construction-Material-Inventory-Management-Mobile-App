@@ -19,6 +19,7 @@ export default function WarehouseInventories() {
 
   // Add modal state
   const [modalVisible, setModalVisible] = useState(false);
+  const [newName, setNewName]           = useState('');
   const [newAddress, setNewAddress]     = useState('');
   const [submitError, setSubmitError]   = useState('');
   const [submitting, setSubmitting]     = useState(false);
@@ -39,20 +40,21 @@ export default function WarehouseInventories() {
   useFocusEffect(useCallback(() => { fetchWarehouses(); }, [fetchWarehouses]));
 
   const openModal = () => {
+    setNewName('');
     setNewAddress('');
     setSubmitError('');
     setModalVisible(true);
   };
 
   const handleAdd = async () => {
-    if (!newAddress.trim()) {
-      setSubmitError('Address is required.');
+    if (!newName.trim() || !newAddress.trim()) {
+      setSubmitError('Both fields are required.');
       return;
     }
     setSubmitting(true);
     setSubmitError('');
     try {
-      const created = await createWarehouse(newAddress.trim());
+      const created = await createWarehouse(newName.trim(), newAddress.trim());
       setWarehouses(prev => [...prev, created]);
       setModalVisible(false);
     } catch (err: any) {
@@ -63,6 +65,7 @@ export default function WarehouseInventories() {
   };
 
   const filtered = warehouses.filter(w =>
+    w.warehouseName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     w.warehouseAddress.toLowerCase().includes(searchQuery.toLowerCase()) ||
     w.id.toString().includes(searchQuery)
   );
@@ -72,10 +75,12 @@ export default function WarehouseInventories() {
       style={styles.jobsiteCard}
       onPress={() => navigation.navigate('WarehouseDeliveries', {
         warehouseId:      item.id.toString(),
+        warehouseName:    item.warehouseName,
         warehouseAddress: item.warehouseAddress,
       })}
     >
       <Text style={styles.jobsiteId}>#{item.id}</Text>
+      <Text style={styles.jobsiteName}>{item.warehouseName}</Text>
       <Text style={styles.jobsiteAddress}>{item.warehouseAddress}</Text>
     </TouchableOpacity>
   );
@@ -86,6 +91,7 @@ export default function WarehouseInventories() {
         <TouchableOpacity style={styles.headerButton} onPress={() => navigation.goBack()}>
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
+        <Text style={styles.pageTitle}>Warehouses</Text>
         <TouchableOpacity style={styles.headerButton} onPress={openModal}>
           <Text style={styles.buttonText}>Add Warehouse</Text>
         </TouchableOpacity>
@@ -97,7 +103,7 @@ export default function WarehouseInventories() {
           style={styles.searchInput}
           value={searchQuery}
           onChangeText={setSearchQuery}
-          placeholder="Type an ID or address..."
+          placeholder="Type a name, address, or ID..."
           placeholderTextColor="#666"
         />
       </View>
@@ -127,6 +133,14 @@ export default function WarehouseInventories() {
           <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <View style={styles.modalCard}>
               <Text style={styles.modalTitle}>Add Warehouse</Text>
+
+              <Text style={styles.modalLabel}>Name</Text>
+              <TextInput
+                style={styles.modalInput}
+                placeholder="e.g. Main Storage"
+                value={newName}
+                onChangeText={setNewName}
+              />
 
               <Text style={styles.modalLabel}>Address</Text>
               <TextInput
@@ -159,7 +173,8 @@ export default function WarehouseInventories() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#E5E7EB', paddingTop: 50, paddingHorizontal: 16 },
-  headerRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 },
+  headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
+  pageTitle: { flex: 1, textAlign: 'center', fontSize: 24, fontWeight: '700', color: '#111827' },
   headerButton: { backgroundColor: '#A3A3A3', paddingVertical: 10, paddingHorizontal: 16, borderRadius: 4 },
   buttonText: { color: '#000', fontSize: 16, fontWeight: '500' },
   searchContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 20, width: '100%' },
@@ -169,7 +184,8 @@ const styles = StyleSheet.create({
   errorText: { color: '#DC2626', padding: 4, marginBottom: 8 },
   jobsiteCard: { backgroundColor: '#F0F0F0', padding: 16, marginBottom: 8, borderRadius: 4 },
   jobsiteId: { fontSize: 12, color: '#6B7280', marginBottom: 2 },
-  jobsiteAddress: { fontSize: 16, fontWeight: '500' },
+  jobsiteName: { fontSize: 16, fontWeight: '600', marginBottom: 2 },
+  jobsiteAddress: { fontSize: 14, color: '#6B7280' },
   // Modal
   overlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'center', alignItems: 'center', padding: 24 },
   modalCard: { backgroundColor: '#FFF', borderRadius: 8, padding: 24, width: '100%', maxWidth: 400 },

@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     padding: 32,
     width: '100%',
     maxWidth: 400,
+    borderRadius: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -107,6 +108,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#E5E7EB',
     padding: 12,
+    borderRadius: 4,
     color: '#000',
   },
   error: {
@@ -116,9 +118,10 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 24,
-    backgroundColor: '#D1D5DB',
+    backgroundColor: '#A3A3A3',
     paddingVertical: 12,
     alignItems: 'center',
+    borderRadius: 4,
   },
   buttonText: {
     fontWeight: '600',
