@@ -13,40 +13,37 @@ export default function MainMenu() {
     <View style={styles.container}>
       {/* Top Navigation Bar */}
       <View style={styles.navBar}>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={logout}
-        >
+        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#F4ACAC' }]} onPress={logout}>
           <Text style={styles.navButtonText}>Logout</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navButton}>
+
+        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#C0AEE8' }]}>
           <Text style={styles.navButtonText}>Admin</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.navButton}>
+
+        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#F4D78A' }]}>
           <Text style={styles.navButtonText}>Leave a review!</Text>
         </TouchableOpacity>
       </View>
 
       {/* Main Content Area */}
       <View style={styles.mainContent}>
-        <TouchableOpacity 
-          style={styles.menuButton}
+        <TouchableOpacity
+          style={[styles.menuButton, { backgroundColor: '#A8C8A0' }]}
           onPress={() => navigation.navigate('Jobsites')}
         >
           <Text style={styles.menuButtonText}>Jobsite Inventories</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.menuButton}
+
+        <TouchableOpacity
+          style={[styles.menuButton, { backgroundColor: '#A0B8D8' }]}
           onPress={() => navigation.navigate('Payorders')}
         >
           <Text style={styles.menuButtonText}>Pay Orders</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.menuButton}
+
+        <TouchableOpacity
+          style={[styles.menuButton, { backgroundColor: '#D4B896' }]}
           onPress={() => navigation.navigate('Warehouses')}
         >
           <Text style={styles.menuButtonText}>Warehouses</Text>
@@ -71,34 +68,33 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   navButton: {
-    backgroundColor: '#D1D5DB', // Slightly darker gray
     paddingVertical: 10,
     paddingHorizontal: 16,
+    borderRadius: 4,
   },
   navButtonText: {
     color: '#000',
     fontWeight: '500',
   },
   mainContent: {
-    flex: 1,
     backgroundColor: '#FFFFFF',
     padding: 24,
+    paddingBottom: 4,
     width: '100%',
     maxWidth: 500,
     alignSelf: 'center',
-    justifyContent: 'center',
+    borderRadius: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    maxHeight: '60%', // Keeps the card from stretching too tall
   },
   menuButton: {
-    backgroundColor: '#E5E7EB',
     paddingVertical: 24,
     alignItems: 'center',
     marginBottom: 20,
+    borderRadius: 4,
   },
   menuButtonText: {
     fontSize: 22,

@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS jobsites(
 -- warehouses
 CREATE TABLE IF NOT EXISTS warehouses(
     id SERIAL PRIMARY KEY,
+    warehouse_name VARCHAR(128) NOT NULL,
     warehouse_address VARCHAR(256) UNIQUE NOT NULL
 );
 
@@ -38,7 +39,7 @@ CREATE TABLE IF NOT EXISTS deliveries(
     id SERIAL PRIMARY KEY,
     warehouse_id INTEGER NOT NULL REFERENCES warehouses(id) ON DELETE CASCADE,
     packing_slip_id VARCHAR(64) NOT NULL,
-    destination_address VARCHAR(256) NOT NULL,
+    jobsite_id INTEGER NOT NULL REFERENCES jobsites(id) ON DELETE CASCADE,
     arrived_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

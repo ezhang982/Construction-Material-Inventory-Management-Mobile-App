@@ -13,6 +13,7 @@ import Payorders            from './src/screens/Payorders';
 import PayorderInventory    from './src/screens/PayorderInventory';
 import Warehouses           from './src/screens/Warehouses';
 import WarehouseDeliveries  from './src/screens/WarehouseDeliveries';
+import DeliveryInventory    from './src/screens/DeliveryInventory';
 
 // Screens reachable once authenticated.
 export type RootStackParamList = {
@@ -22,7 +23,8 @@ export type RootStackParamList = {
   Payorders:           undefined;
   PayorderInventory:   { payorderId: string; payorderNumber: string; jobsiteAddress: string; fulfillmentStatus: string };
   Warehouses:          undefined;
-  WarehouseDeliveries: { warehouseId: string; warehouseAddress: string };
+  WarehouseDeliveries: { warehouseId: string; warehouseName: string; warehouseAddress: string };
+  DeliveryInventory:   { warehouseId: string; deliveryId: string; packingSlipId: string; jobsiteId: string; jobsiteName: string; jobsiteAddress: string };
 };
 
 type AuthStackParamList = { Login: undefined };
@@ -58,6 +60,7 @@ function RootNavigator() {
       <MainStack.Screen name="PayorderInventory"   component={PayorderInventory} />
       <MainStack.Screen name="Warehouses"          component={Warehouses} />
       <MainStack.Screen name="WarehouseDeliveries" component={WarehouseDeliveries} />
+      <MainStack.Screen name="DeliveryInventory"   component={DeliveryInventory} />
     </MainStack.Navigator>
   );
 }
