@@ -163,7 +163,7 @@ export async function updatePermission(req: Request, res: Response): Promise<voi
             return;
         }
 
-        res.json({ email: result.rows[0].email, permissionLevel: result.rows[0].permission_level });
+        res.json({ email: result.rows[0].email, permissionLevel: result.rows[0].permission_level, role: ROLE_MAP[result.rows[0].permission_level] });
     } catch (err) {
         console.error('Update permission error:', err);
         res.status(500).json({ error: 'Internal server error' });

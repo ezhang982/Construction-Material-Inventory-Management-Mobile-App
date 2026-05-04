@@ -20,7 +20,7 @@ export default function MainMenu() {
         </TouchableOpacity>
         
         
-        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#EB363F' }]} onPress={() => navigation.navigate('Admin')}>
+        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#D4888E' }]} onPress={() => navigation.navigate('Admin')}>
           <Text style={styles.navButtonText}>Admin</Text>
         </TouchableOpacity>
 
